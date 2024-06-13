@@ -9,13 +9,16 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Inisialisasi Hive
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDocumentDir.path);
-  
+
   // Membuka box untuk Hive
-  await Hive.openBox('userBox');
+  var box = await Hive.openBox('userBox');
+
+  // Logging data di Hive
+  print('Data in Hive before running app: ${box.toMap()}');
 
   runApp(MyApp());
 }

@@ -1,4 +1,3 @@
-// lib/app/services/pembayaran_service.dart
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../services/model/products.dart';
@@ -10,9 +9,15 @@ class PembayaranService {
     final response = await http.get(Uri.parse('$url?id_pengguna=$idPengguna'));
 
     if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      print('Response from API: $jsonResponse'); // Logging response
-      return jsonResponse.map((data) => Pembayaran.fromJson(data)).toList();
+      try {
+        List jsonResponse = json.decode(response.body);
+        print('Response from API: $jsonResponse'); // Logging response
+        return jsonResponse.map((data) => Pembayaran.fromJson(data)).toList();
+      } catch (e) {
+        print('Error parsing JSON: $e'); // Logging parsing error
+        print('Raw response: ${response.body}'); // Logging raw response
+        throw Exception('Failed to parse JSON');
+      }
     } else {
       print('Error: ${response.statusCode} - ${response.body}'); // Logging error
       throw Exception('Failed to load pembayaran');
