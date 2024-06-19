@@ -123,7 +123,7 @@ Widget _metodePembayaran() {
         children: [
           RadioListTile<String>(
             title: Text(
-              'COD',
+              'Transfer Bank',
               style: TextStyle(
                 fontSize: 12.sp,
               ),

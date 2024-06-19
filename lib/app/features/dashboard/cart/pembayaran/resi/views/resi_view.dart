@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../controllers/resi_controller.dart';
 
-class ResiView extends GetView<ResiController> {
+class ResiView extends StatelessWidget {
   const ResiView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Inisialisasi ResiController menggunakan Get.put
+    final ResiController controller = Get.put(ResiController());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Pesanan'),
@@ -26,6 +29,8 @@ class ResiView extends GetView<ResiController> {
               controller.estimasiPengiriman.value,
               controller.statusPembelian.value,
             ),
+            SizedBox(height: 20.sp),
+            _BackToDashboardButton(),
           ],
         )),
       ),
@@ -85,7 +90,6 @@ Widget _DetailPesanan(String namaPengguna, String alamat, String estimasiPengiri
 Widget _TextDetailPesanan(String label, String subLabel) {
   return Expanded(
     child: Container(
-      width: 0.42.sw,
       child: Wrap(
         direction: Axis.vertical,
         spacing: 5.sp,
@@ -99,7 +103,7 @@ Widget _TextDetailPesanan(String label, String subLabel) {
             style: TextStyle(
               fontSize: 12.sp,
             ),
-          )
+          ),
         ],
       ),
     ),
@@ -109,7 +113,6 @@ Widget _TextDetailPesanan(String label, String subLabel) {
 Widget _StatusDetailPesanan(String label, String subLabel) {
   return Expanded(
     child: Container(
-      width: 0.42.sw,
       child: Wrap(
         direction: Axis.vertical,
         spacing: 5.sp,
@@ -124,9 +127,20 @@ Widget _StatusDetailPesanan(String label, String subLabel) {
               fontSize: 12.sp,
               color: Colors.amber,
             ),
-          )
+          ),
         ],
       ),
+    ),
+  );
+}
+
+Widget _BackToDashboardButton() {
+  return Center(
+    child: ElevatedButton(
+      onPressed: () {
+        Get.toNamed('/dashboard');
+      },
+      child: Text('Kembali ke Dashboard'),
     ),
   );
 }

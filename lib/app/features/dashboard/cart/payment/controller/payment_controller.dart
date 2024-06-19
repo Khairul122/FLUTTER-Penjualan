@@ -3,10 +3,12 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:marketplace/app/features/dashboard/cart/pembayaran/resi/views/resi_view.dart';
 import 'dart:math';
 
 import 'package:marketplace/app/features/dashboard/cart/views/cart_view.dart';
 import 'package:marketplace/app/features/dashboard/index/views/screens/dashboard_screen.dart';
+import '../../pembayaran/resi/views/resi_view.dart';
 
 class PaymentController extends GetxController {
   var bankName = 'Bank BNI'.obs;
@@ -24,7 +26,8 @@ class PaymentController extends GetxController {
   }
 
   String formatCurrency(double amount) {
-    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    final currencyFormatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
     return currencyFormatter.format(amount);
   }
 
@@ -38,16 +41,19 @@ class PaymentController extends GetxController {
     var userData = box.get('user');
     if (userData != null) {
       int idPengguna = int.parse(userData['id_pengguna']);
-      var url = Uri.parse('http://10.0.2.2/backend-penjualan/GetOrderAPI.php?id_pengguna=$idPengguna');
-      
+      var url = Uri.parse(
+          'http://10.0.2.2/backend-penjualan/GetOrderAPI.php?id_pengguna=$idPengguna');
+
       try {
         var response = await http.get(url);
         if (response.statusCode == 200) {
           var data = json.decode(response.body) as List;
-          double totalAmount = data.fold(0.0, (sum, item) => sum + double.parse(item['total'].toString()));
-          
+          double totalAmount = data.fold(
+              0.0, (sum, item) => sum + double.parse(item['total'].toString()));
+
           // Generate unique 3 digit code
-          uniqueCode.value = Random().nextInt(900) + 100; // Random number between 100 and 999
+          uniqueCode.value =
+              Random().nextInt(900) + 100; // Random number between 100 and 999
           amount.value = totalAmount + uniqueCode.value;
         } else {
           print("Failed to load total amount: ${response.body}");
@@ -65,8 +71,9 @@ class PaymentController extends GetxController {
     var userData = box.get('user');
     if (userData != null) {
       int idPengguna = int.parse(userData['id_pengguna']);
-      var url = Uri.parse('http://10.0.2.2/backend-penjualan/UpdateTotalAPI.php');
-      
+      var url =
+          Uri.parse('http://10.0.2.2/backend-penjualan/UpdateTotalAPI.php');
+
       var response = await http.put(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -81,19 +88,22 @@ class PaymentController extends GetxController {
           middleText: "Data Berhasil Disimpan",
           textConfirm: "OK",
           onConfirm: () {
-           Get.to(() => DashboardScreen());
+            Get.to(() => ResiView());
           },
         );
       } else if (response.statusCode == 400) {
         print("Failed to update total: ${response.body}");
-        Get.snackbar('Error', 'Failed to update total', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Error', 'Failed to update total',
+            snackPosition: SnackPosition.BOTTOM);
       } else {
         print("Failed to update total: ${response.body}");
-        Get.snackbar('Error', 'Failed to update total', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Error', 'Failed to update total',
+            snackPosition: SnackPosition.BOTTOM);
       }
     } else {
       print("id_pengguna tidak ditemukan di Hive.");
-      Get.snackbar('Error', 'id_pengguna tidak ditemukan di Hive.', snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Error', 'id_pengguna tidak ditemukan di Hive.',
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 }

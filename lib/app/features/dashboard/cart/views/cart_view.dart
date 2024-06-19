@@ -117,7 +117,7 @@ class CartView extends StatelessWidget {
                       controller.fetchCartItems(); // Memanggil fetchCartItems setelah checkout untuk mendapatkan data terbaru
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Color.fromRGBO(157, 94, 0, 1),
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:intl/intl.dart';
 
 class ResiController extends GetxController {
   var kodeTransaksi = ''.obs;
@@ -33,14 +32,7 @@ class ResiController extends GetxController {
             namaPengguna.value = data['nama_pengguna'];
             alamat.value = data['alamat'];
             statusPembelian.value = data['status_pembelian'];
-
-            // Calculate estimated delivery date
-            DateTime now = DateTime.now();
-            DateTime startDate = now.add(Duration(days: 3));
-            DateTime endDate = now.add(Duration(days: 4));
-            String formattedStartDate = DateFormat('d MMMM yyyy', 'id_ID').format(startDate);
-            String formattedEndDate = DateFormat('d MMMM yyyy', 'id_ID').format(endDate);
-            estimasiPengiriman.value = '$formattedStartDate - $formattedEndDate';
+            estimasiPengiriman.value = data['estimasi_pengiriman'];
           }
         } else {
           print("Failed to load order details: ${response.body}");
