@@ -20,7 +20,7 @@ class ItemOrderData {
     required this.price,
     required this.brand,
     required this.name,
-    required this.initialFavorite,
+    required this.initialFavorite, required int quantity,
   });
 }
 
