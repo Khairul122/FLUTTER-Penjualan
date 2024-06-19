@@ -56,7 +56,11 @@ class PembayaranController extends GetxController {
   }
 
   double calculateTotal() {
-    return pembayaranList.fold(0.0, (sum, item) => sum + item.total);
+    var box = Hive.box('userBox');
+    var userData = box.get('user');
+    double ongkir = double.tryParse(userData['ongkir']) ?? 0.0;
+    double totalPembayaran = pembayaranList.fold(0.0, (sum, item) => sum + item.total);
+    return totalPembayaran + ongkir;
   }
 
   Future<void> buatPesanan() async {

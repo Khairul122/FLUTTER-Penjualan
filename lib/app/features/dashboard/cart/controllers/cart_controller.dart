@@ -4,16 +4,25 @@ import '../../../../../app/utils/services/model/cart_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:hive/hive.dart';
+import 'dart:async';
 
 class CartController extends GetxController {
   var cartItems = <CartItem>[].obs; // Observable list untuk menyimpan item cart
   var totalAmount = 0.0.obs; // Observable untuk total harga
   var box = Hive.box('userBox'); // Box Hive untuk menyimpan data pengguna
+  Timer? timer; // Timer untuk update data
 
   @override
   void onInit() {
     super.onInit();
     fetchCartItems();
+    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => fetchCartItems());
+  }
+
+  @override
+  void onClose() {
+    timer?.cancel();
+    super.onClose();
   }
 
   void fetchCartItems() async {
@@ -155,5 +164,41 @@ class CartController extends GetxController {
     } else {
       print("id_pengguna tidak ditemukan di Hive.");
     }
+  }
+
+  Future<void> deleteCartItem(int idKeranjang) async {
+    var url = Uri.parse('http://10.0.2.2/backend-penjualan/deleteKeranjangAPI.php');
+    var response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'id_keranjang': idKeranjang}),
+    );
+
+    if (response.statusCode == 200) {
+      var responseData = json.decode(response.body);
+      if (responseData['status'] == 'success') {
+        fetchCartItems(); // Refresh data setelah berhasil menghapus item
+      } else {
+        print("Failed to delete item: ${responseData['message']}");
+      }
+    } else {
+      print("Failed to delete item: ${response.body}");
+    }
+  }
+
+  void decreaseQuantity(CartItem item) {
+    if (item.quantity > 1) {
+      item.quantity--;
+    } else {
+      deleteCartItem(item.id);
+    }
+    cartItems.refresh();
+    calculateTotal();
+  }
+
+  void increaseQuantity(CartItem item) {
+    item.quantity++;
+    cartItems.refresh();
+    calculateTotal();
   }
 }

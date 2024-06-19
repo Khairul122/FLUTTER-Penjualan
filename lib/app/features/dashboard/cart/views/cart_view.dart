@@ -58,11 +58,7 @@ class CartView extends StatelessWidget {
                                       children: [
                                         IconButton(
                                           onPressed: () {
-                                            if (item.quantity > 1) {
-                                              item.quantity--;
-                                              controller.cartItems.refresh();
-                                              controller.calculateTotal();
-                                            }
+                                            controller.decreaseQuantity(item);
                                           },
                                           icon: Icon(Icons.remove),
                                           color: Colors.red,
@@ -70,9 +66,7 @@ class CartView extends StatelessWidget {
                                         Text('${item.quantity}', style: TextStyle(fontSize: 16)),
                                         IconButton(
                                           onPressed: () {
-                                            item.quantity++;
-                                            controller.cartItems.refresh();
-                                            controller.calculateTotal();
+                                            controller.increaseQuantity(item);
                                           },
                                           icon: Icon(Icons.add),
                                           color: Colors.green,

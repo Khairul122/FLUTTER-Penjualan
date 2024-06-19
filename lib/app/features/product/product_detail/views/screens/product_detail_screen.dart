@@ -157,7 +157,7 @@ class ProductDetailScreen extends GetView<ProductDetailController> {
     print('Response data: $responseData'); // Cetak respons lengkap dari server
 
     if (response.statusCode == 200) {
-      Get.snackbar('Success', 'Product added to cart: ${responseData['received_data']}');
+      Get.snackbar('Success', 'Berhasil Masuk Keranjang');
     } else {
       Get.snackbar('Error', 'Failed to add product to cart: ${responseData['message']}');
     }

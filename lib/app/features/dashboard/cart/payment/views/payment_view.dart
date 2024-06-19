@@ -27,7 +27,7 @@ class PaymentView extends GetView<PaymentController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Mohon transfer ke Flip',
+                'Mohon transfer ke Rizka',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(height: 4),

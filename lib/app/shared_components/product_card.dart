@@ -41,9 +41,10 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10.sp),
+      padding: EdgeInsets.all(8.sp), // Kurangi padding untuk memberikan lebih banyak ruang
       width: 150.w,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Hero(
             tag: heroTag,
@@ -73,16 +74,19 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: kSpacing),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildBrandProduct(data.brand),
-              _buildNameProduct(data.name),
-              _buildPriceText(data.price),
-            ],
-          )
+          SizedBox(height: 6.sp), // Kurangi ukuran SizedBox untuk memberikan lebih banyak ruang
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildBrandProduct(data.brand),
+                _buildNameProduct(data.name),
+                _buildPriceText(data.price),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -91,26 +95,22 @@ class ProductCard extends StatelessWidget {
   Widget _buildImage(image) {
     return Container(
       margin: EdgeInsets.all(2.0.sp),
-      // padding: EdgeInsets.all(10.sp),
-      height: 160.sp,
+      height: 140.sp, // Kurangi tinggi gambar untuk memberikan lebih banyak ruang
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10.0, // Specifies the blur radius of the shadow
-              spreadRadius: 0.0, // Specifies the spread radius of the shadow
-            ),
-          ],
-          image: DecorationImage(
-              image: NetworkImage(
-                  "http://10.0.2.2/backend-penjualan/$image"),
-              fit: BoxFit.cover)),
-      // child: Image(
-      //   image: image,
-      //   fit: BoxFit.cover,
-      // ),
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10.0,
+            spreadRadius: 0.0,
+          ),
+        ],
+        image: DecorationImage(
+          image: NetworkImage("http://10.0.2.2/backend-penjualan/$image"),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 
@@ -148,19 +148,21 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-Widget _buildPriceText(double price) {
-  final formatCurrency = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
-  String formattedPrice = formatCurrency.format(price);
-  return Text(
-    formattedPrice,
-    style: TextStyle(
-      color: kFontColorPallets[0],
-      fontSize: 10.sp,
-    ),
-    maxLines: 1,
-    overflow: TextOverflow.ellipsis,
-  );
-}
+  Widget _buildPriceText(double price) {
+    final formatCurrency = NumberFormat.currency(
+        locale: 'id_ID', symbol: 'Rp', decimalDigits: 0);
+    String formattedPrice = formatCurrency.format(price);
+    return Text(
+      formattedPrice,
+      style: TextStyle(
+        color: kFontColorPallets[0],
+        fontSize: 10.sp,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
   Widget _buildNameProduct(String name) {
     return Text(
       name,
