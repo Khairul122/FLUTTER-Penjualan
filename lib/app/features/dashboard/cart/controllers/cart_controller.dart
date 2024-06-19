@@ -28,7 +28,7 @@ class CartController extends GetxController {
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body) as List;
-        var items = data.map((item) => CartItem.fromJson(item)).toList();
+        var items = data.where((item) => item['status'] == 'pending').map((item) => CartItem.fromJson(item)).toList();
         cartItems.assignAll(items);
         calculateTotal();
         
