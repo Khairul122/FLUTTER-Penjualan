@@ -110,6 +110,7 @@ class CartController extends GetxController {
         final transactionCode = generateTransactionCode(transactionCount + 1);
 
         var cartData = selectedItems.map((item) => {
+          'id_keranjang': item.id, // Tambahkan id_keranjang
           'id_produk': item.productId,
           'harga_produk': item.price,
           'quantity': item.quantity,

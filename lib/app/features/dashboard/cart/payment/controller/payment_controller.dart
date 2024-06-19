@@ -6,10 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:marketplace/app/features/dashboard/cart/pembayaran/resi/views/resi_view.dart';
 import 'dart:math';
 
-import 'package:marketplace/app/features/dashboard/cart/views/cart_view.dart';
-import 'package:marketplace/app/features/dashboard/index/views/screens/dashboard_screen.dart';
-import '../../pembayaran/resi/views/resi_view.dart';
-
 class PaymentController extends GetxController {
   var bankName = 'Bank BNI'.obs;
   var accountName = 'PT Fliptech Lentera Inspirasi Pertiwi'.obs;
@@ -67,22 +63,27 @@ class PaymentController extends GetxController {
   }
 
   Future<void> confirmTransfer() async {
+    isLoading.value = true;
     var box = Hive.box('userBox');
     var userData = box.get('user');
     if (userData != null) {
       int idPengguna = int.parse(userData['id_pengguna']);
       var url =
-          Uri.parse('http://10.0.2.2/backend-penjualan/UpdateTotalAPI.php');
+          Uri.parse('http://10.0.2.2/backend-penjualan/updateKeranjangStatusAPI.php');
 
-      var response = await http.put(
+      var response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'id_pengguna': idPengguna, 'total': amount.value}),
+        body: jsonEncode({'id_pengguna': idPengguna}),
       );
 
       if (response.statusCode == 200) {
-        print("Total updated successfully");
-        // Tampilkan dialog sukses di view
+        var data = jsonDecode(response.body);
+        if (data['status'] == 'success') {
+          Get.snackbar('Success', 'Status updated successfully');
+        } else {
+          Get.snackbar('Error', 'Failed to update status: ${data['message']}');
+        }
         Get.defaultDialog(
           title: "Sukses",
           middleText: "Data Berhasil Disimpan",
@@ -91,13 +92,9 @@ class PaymentController extends GetxController {
             Get.to(() => ResiView());
           },
         );
-      } else if (response.statusCode == 400) {
-        print("Failed to update total: ${response.body}");
-        Get.snackbar('Error', 'Failed to update total',
-            snackPosition: SnackPosition.BOTTOM);
       } else {
-        print("Failed to update total: ${response.body}");
-        Get.snackbar('Error', 'Failed to update total',
+        print("Failed to update status: ${response.body}");
+        Get.snackbar('Error', 'Failed to update status',
             snackPosition: SnackPosition.BOTTOM);
       }
     } else {
@@ -105,5 +102,6 @@ class PaymentController extends GetxController {
       Get.snackbar('Error', 'id_pengguna tidak ditemukan di Hive.',
           snackPosition: SnackPosition.BOTTOM);
     }
+    isLoading.value = false;
   }
 }
