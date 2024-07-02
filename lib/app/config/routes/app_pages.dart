@@ -3,6 +3,7 @@ import 'package:marketplace/app/features/authentication/index/bindings/login_bin
 import 'package:marketplace/app/features/dashboard/cart/bindings/cart_binding.dart';
 import 'package:marketplace/app/features/dashboard/cart/pembayaran/bindings/pembayaran_binding.dart';
 import 'package:marketplace/app/features/dashboard/order/bindings/order_binding.dart';
+import 'package:marketplace/app/features/dashboard/profile/bindings/profile_binding.dart';
 
 import '../../features/authentication/index/views/screens/login_screen.dart';
 import '../../features/authentication/register/bindings/register_binding.dart';

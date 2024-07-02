@@ -1,20 +1,16 @@
-part of profile;
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  // Observable variables to store the user data
+  var namaPengguna = ''.obs;
+  var email = ''.obs;
 
-  final count = 0.obs;
-
-  TextEditingController namaPengguna = TextEditingController();
-  TextEditingController email = TextEditingController();
   @override
   void onInit() {
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
+    fetchUserData();
   }
 
   @override
@@ -22,5 +18,13 @@ class ProfileController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  // Method to fetch user data from Hive
+  void fetchUserData() async {
+    var box = await Hive.openBox('userBox');
+    var userData = box.get('user');
+    if (userData != null) {
+      namaPengguna.value = userData['nama_pengguna'];
+      email.value = userData['email'];
+    }
+  }
 }
