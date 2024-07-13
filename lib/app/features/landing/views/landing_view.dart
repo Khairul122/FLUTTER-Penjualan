@@ -60,7 +60,7 @@ class LandingScreen extends GetView<LandingController> {
                 SizedBox(
                     width: 1.sw,
                     child: CustomButton(
-                      label: "Login",
+                      label: "Masuk",
                       onTap: () {
                         Get.toNamed("/login");
                       },
@@ -72,7 +72,7 @@ class LandingScreen extends GetView<LandingController> {
                 SizedBox(
                     width: 1.sw,
                     child: CustomButton(
-                      label: "Register",
+                      label: "Daftar",
                       onTap: () {
                         Get.toNamed("/register");
                       },

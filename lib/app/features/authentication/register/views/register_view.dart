@@ -25,7 +25,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "SIGN UP",
+                      "DAFTAR",
                       style: TextStyle(
                         fontSize: 26.sp,
                         color: Color(0xFFBA704F),
@@ -45,7 +45,7 @@ class RegisterScreen extends GetView<RegisterController> {
                 SizedBox(height: 15.sp),
                 InputField(label: "Email", controller: controller.email),
                 SizedBox(height: 15.sp),
-                InputField(label: "Password", controller: controller.password),
+                InputField(label: "Kata Sandi", controller: controller.password),
                 SizedBox(height: 15.sp),
                 Obx(() {
                   return DropdownButtonFormField<String>(
@@ -79,7 +79,7 @@ class RegisterScreen extends GetView<RegisterController> {
                 SizedBox(
                   width: 1.sw,
                   child: CustomButton(
-                    label: "Register",
+                    label: "Daftar",
                     onTap: () {
                       controller.register();
                     },

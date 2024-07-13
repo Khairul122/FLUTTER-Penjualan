@@ -62,7 +62,7 @@ class RegisterController extends GetxController {
           Get.dialog(
             AlertDialog(
               title: Text('Success'),
-              content: Text('Registration successful'),
+              content: Text('Berhasil Daftar'),
               actions: [
                 TextButton(
                   onPressed: () {

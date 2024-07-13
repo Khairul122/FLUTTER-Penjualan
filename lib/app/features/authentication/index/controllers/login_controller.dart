@@ -34,7 +34,7 @@ class LoginController extends GetxController {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Success'),
-                content: Text('Login successful'),
+                content: Text('Berhasil Masuk'),
                 actions: [
                   TextButton(
                     onPressed: () {

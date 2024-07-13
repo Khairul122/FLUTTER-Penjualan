@@ -46,6 +46,7 @@ Widget _imageSlider() {
   final List<String> imageList = [
     'assets/images/slider1.jpg',
     'assets/images/slider2.jpg',
+    'assets/images/kami.jpg',
   ];
 
   return CarouselSlider(
@@ -87,7 +88,7 @@ Widget _categoryList(HomeController controller) {
         return Text('No categories found');
       } else {
         List categories = snapshot.data as List;
-        categories.insert(0, {'nama_kategori': 'All'}); // Tambahkan "All" di awal daftar
+        categories.insert(0, {'nama_kategori': 'Semua'}); // Tambahkan "All" di awal daftar
         return Container(
           height: 50.sp,
           child: ListView.builder(

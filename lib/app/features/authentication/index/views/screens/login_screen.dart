@@ -38,7 +38,7 @@ class LoginScreen extends GetView<LoginController> {
                     height: 15.sp,
                   ),
                   InputField(
-                      label: "Password", controller: controller.password),
+                      label: "Kata Sandi", controller: controller.password),
                 ],
               ),
               SizedBox(
@@ -49,7 +49,7 @@ class LoginScreen extends GetView<LoginController> {
                   SizedBox(
                     width: 1.sw,
                     child: CustomButton(
-                      label: "Login",
+                      label: "Masuk",
                       onTap: () {
                         controller.login();
                       },
